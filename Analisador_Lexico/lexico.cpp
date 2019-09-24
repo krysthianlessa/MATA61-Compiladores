@@ -46,6 +46,10 @@ bool eh_EOF(char c){
     return (c == -1);
 }
 
+void gerarLexema(){
+    maquina.str_acumulado = "";
+}
+
 void consome(char c){
     maquina.str_acumulado += c;
     maquina.ult_linha = linha;
@@ -60,20 +64,53 @@ int qzero(char c) {
         consome(c);
         return NUM;
     } else if (eh_separador(c)) {
-        
+        if (c == 10){
+            linha++;
+            coluna = 0;
+        }
+        return Q0;
     } else if (eh_EOF(c)) {
-        
-    }
-    
-    
+        return Q0;
+    }    
 }
 
 int id(char c) {
-
+    if (eh_letra(c)) {
+        consome(c);
+        return ID;
+    } else if (eh_numero(c)) {
+        consome(c);
+        return NUM;
+    } else if (eh_separador(c)) {
+        if (c == 10){
+            linha++;
+            coluna = 0;
+        }
+        return Q0;
+    } else if (eh_EOF(c)) {
+        return Q0;
+    }
 }
 
 int num(char c){
-
+    if (eh_letra(c)) {
+        gerarLexema();
+        cout << "Erro Léxico " << linha << "." << coluna << "." << ": Não pode ter digito seguido de letra." << endl;
+        // imprimeErro(maquina.ult_linha, maquina.ult_coluna);
+        consome(c);
+        return ID;
+    } else if (eh_numero(c)) {
+        consome(c);
+        return NUM;
+    } else if (eh_separador(c)) {
+        if (c == 10){
+            linha++;
+            coluna = 0;
+        }
+        return Q0;
+    } else if (eh_EOF(c)) {
+        return Q0;
+    }
 }
 
 void analisadorLexico(string buffer) {
