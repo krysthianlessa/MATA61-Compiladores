@@ -64,7 +64,7 @@ int qzero(char c) {
         consome(c);
         return NUM;
     } else if (eh_separador(c)) {
-        if (c == 10){
+        if (c == 10) {
             linha++;
             coluna = 0;
         }
@@ -80,14 +80,16 @@ int id(char c) {
         return ID;
     } else if (eh_numero(c)) {
         consome(c);
-        return NUM;
+        return ID;
     } else if (eh_separador(c)) {
-        if (c == 10){
+        gerarLexema();
+        if (c == 10) {
             linha++;
             coluna = 0;
         }
         return Q0;
     } else if (eh_EOF(c)) {
+        gerarLexema();
         return Q0;
     }
 }
@@ -96,19 +98,20 @@ int num(char c){
     if (eh_letra(c)) {
         gerarLexema();
         cout << "Erro Léxico " << linha << "." << coluna << "." << ": Não pode ter digito seguido de letra." << endl;
-        // imprimeErro(maquina.ult_linha, maquina.ult_coluna);
         consome(c);
-        return ID;
+        return Q0;
     } else if (eh_numero(c)) {
         consome(c);
         return NUM;
     } else if (eh_separador(c)) {
+        gerarLexema();
         if (c == 10){
             linha++;
             coluna = 0;
         }
         return Q0;
     } else if (eh_EOF(c)) {
+        gerarLexema();
         return Q0;
     }
 }
@@ -117,6 +120,11 @@ void analisadorLexico(string buffer) {
     maquina.estado = Q0;
     
     for(int i = 0; i < buffer.size(); i++, coluna++){
+        
+        if (!ehCharValido(buffer[i])) {
+            cout << "Erro Léxico " << linha << "." << coluna << "." << ": Caracter não reconhecido pela linguagem." << endl;
+        }
+        
         switch (maquina.estado) {
             case Q0:
                 maquina.estado = qzero(buffer[i]);
@@ -128,6 +136,7 @@ void analisadorLexico(string buffer) {
                 maquina.estado = num(buffer[i]);
                 break;
             default:
+                cout << buffer[i] << endl;
                 cout << "Tratar alguma coisa!\n";
                 break;
         }

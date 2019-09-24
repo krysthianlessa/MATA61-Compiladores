@@ -1,13 +1,13 @@
 PROGRAMAINICIO
     DEFINAINSTRUCAO Trilha COMO
     INICIO
-        Mova 3 Passos
-        Aguarde Até Robô Pronto
+        Mova 3abc Passos
+        Aguarde Ate Robo Pronto
         Vire Para ESQUERDA
-        Apagar Lâmpada
+        Apagar Lampada
         Vire Para DIREITA
         Mova 1 Passo
-        Aguarde Até Robô Pronto
+        Aguarde Ate Robo Pronto
     FIM
     EXECUCAOINICIO
         Repita 3 VEZES Trilha
