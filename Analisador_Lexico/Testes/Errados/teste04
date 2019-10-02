@@ -1,0 +1,80 @@
+PROGRAMAINICIO
+	DEFINAINSTRUCAO trilha COMO	
+	INICIO	
+		Mova 3 passos	
+		Aguarde Ate Robo Pronto
+		Vire para ESQUERDA
+		Vire para DIREITA
+		Apagar LAMPADA
+		Mova 1 passo
+		Aguarde Ate Robo Pronto
+	FIM
+	EXECUCAOINICIO
+		Repita 3 VEZES Trilha	
+		Vire Para Direita
+	FIMEXECUCAO
+FIMPROGRAMA
+
+PROGRAMAINICIO
+	DEFINAINSTRUCAO TRILHA COMO	
+	INICIO	
+		Mova 3az passos	
+		Aguarde Ate Robo Pronto
+		Vire para ESQUERDA
+		Vire para DIREITA
+		Apagar LAMPADA
+		Mova 1 passo
+		Aguarde Ate Robo Pronto
+	FIM
+	EXECUCAOINICIO
+		Repita 3 VEZES Trilha	
+		Vire Para Direita
+	FIMEXECUCAO
+FIMPROGRAMA
+
+bo Pronto
+		Vire para ESQUERDA
+		Vire para DIREITA
+		Apagar LAMPADA
+		Mova 1 passo
+		Aguarde Ate Robo Pronto
+	FIM
+	EXECUCAOINICIO
+		Repita 3 VEZES Trilha	
+		Vire Para Direita
+	FIMEXECUCAO
+FIMPROGRAMA
+
+_PRICIO
+	DEFINAINSTRUCAO TRILHA COMO	
+	INICIO	
+		Mova 3 passos	
+		Aguarde Ate Robo Pronto
+		Vire para %EQUERDA
+		Vire para DIREITA
+		Apagar LAMPADA
+		Mova 1 passo
+		Aguarde Ate Robo Pronto
+	FIM67&80
+	EXECUCAOINICIO
+		Repita 4 VEZES Trilha	
+		Vire Para Direita
+	FIMEXECUCAO
+FIMPROGRAMA
+
+PROGRAMAINICIO
+	DEFINAINSTRUCAO TRILHA COMO	
+	INICIO	
+		Mova 3 passos	
+		Aguarde Ate Robo Pronto
+		Vire para ESQUERDA
+		Vire para DIREITA
+		Apagar LAMPADA
+		Mova 1 passo
+		Aguarde Ate Robo Pronto
+	FIM
+	EXECUCAOINICIO
+		Repita 3 VEZES Trilha	
+		Vire Para Direita
+	FIMEXECUCAO
+FIMPROGRAMA

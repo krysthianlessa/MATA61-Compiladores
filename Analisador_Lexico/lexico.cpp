@@ -7,6 +7,7 @@ using namespace std;
 #define Q0 0
 #define ID 1
 #define NUM 2
+#define CMT 3
 
 typedef struct {
     string str;
@@ -22,12 +23,10 @@ typedef struct {
 MaquinaDeEstados maquina;
 int linha = 1;
 int coluna = 1;
+bool temErro = false;
 
 bool ehCharValido(char c) {
-    return ( c == 32 || c == 9 || c == 10 || c == -1 ||
-            (c >= 48 && c <= 57) || 
-            (c >= 65 && c <= 90) || 
-            (c >= 97 && c <= 122));
+    return (c == -1 || c == 9 || c == 10 || (c >= 32 && c <= 126));
 }
 
 bool eh_letra(char c) {
@@ -42,15 +41,19 @@ bool eh_separador(char c) {
     return ((c == 9) || (c == 10) || (c == 32));
 }
 
+bool eh_jogoDaVelha(char c) {
+    return (c == '#');
+}
+
 bool eh_EOF(char c){
     return (c == -1);
 }
 
-void gerarLexema(){
+void gerarLexema() {
     maquina.str_acumulado = "";
 }
 
-void consome(char c){
+void consome(char c) {
     maquina.str_acumulado += c;
     maquina.ult_linha = linha;
     maquina.ult_coluna = coluna;
@@ -69,9 +72,16 @@ int qzero(char c) {
             coluna = 0;
         }
         return Q0;
+    } else if (eh_jogoDaVelha(c)) {
+        consome(c);
+        return CMT;
     } else if (eh_EOF(c)) {
         return Q0;
-    }    
+    } else {
+        cout << "Erro Léxico " << linha << "." << coluna << "." << ": Caracter inválido." << endl;
+        temErro = true;
+        return Q0;
+    }
 }
 
 int id(char c) {
@@ -91,13 +101,19 @@ int id(char c) {
     } else if (eh_EOF(c)) {
         gerarLexema();
         return Q0;
+    } else {
+        gerarLexema();
+        cout << "Erro Léxico " << linha << "." << coluna << "." << ": Caracter inválido para constante identificadora." << endl;
+        temErro = true;
+        return Q0;
     }
 }
 
-int num(char c){
+int num(char c) {
     if (eh_letra(c)) {
         gerarLexema();
         cout << "Erro Léxico " << linha << "." << coluna << "." << ": Não pode ter digito seguido de letra." << endl;
+        temErro = true;
         consome(c);
         return Q0;
     } else if (eh_numero(c)) {
@@ -113,6 +129,26 @@ int num(char c){
     } else if (eh_EOF(c)) {
         gerarLexema();
         return Q0;
+    } else {
+        gerarLexema();
+        cout << "Erro Léxico " << linha << "." << coluna << "." << ": Caracter inválido para constante numérica." << endl;
+        temErro = true;
+        return Q0;
+    }
+}
+
+int cmt(char c) {
+    if(c == 10) {
+        gerarLexema();
+        linha++;
+        coluna = 0;
+        return Q0;
+    } else if(eh_EOF(c)) {
+        gerarLexema();
+        return Q0;
+    } else {
+        consome(c);
+        return CMT;
     }
 }
 
@@ -121,24 +157,28 @@ void analisadorLexico(string buffer) {
     
     for(int i = 0; i < buffer.size(); i++, coluna++){
         
-        if (!ehCharValido(buffer[i])) {
+        if (!ehCharValido(buffer[i]) && maquina.estado != CMT) {
             cout << "Erro Léxico " << linha << "." << coluna << "." << ": Caracter não reconhecido pela linguagem." << endl;
-        }
-        
-        switch (maquina.estado) {
-            case Q0:
-                maquina.estado = qzero(buffer[i]);
-                break;
-            case ID:
-                maquina.estado = id(buffer[i]);
-                break;
-            case NUM:
-                maquina.estado = num(buffer[i]);
-                break;
-            default:
-                cout << buffer[i] << endl;
-                cout << "Tratar alguma coisa!\n";
-                break;
+            temErro = true;
+        } else {
+            switch (maquina.estado) {
+                case Q0:
+                    maquina.estado = qzero(buffer[i]);
+                    break;
+                case ID:
+                    maquina.estado = id(buffer[i]);
+                    break;
+                case NUM:
+                    maquina.estado = num(buffer[i]);
+                    break;
+                case CMT:
+                    maquina.estado = cmt(buffer[i]);
+                    break;
+                default:
+                    cout << buffer[i] << endl;
+                    cout << "Tratar alguma coisa!\n";
+                    break;
+            }
         }
     }
 }    
@@ -154,8 +194,10 @@ int main()
     buffer += -1;
 
     analisadorLexico(buffer);
-    
-    cout << "Analise léxica concluída com sucesso!" << endl;
-    
+
+    if (!temErro) {
+        cout << "Analise léxica concluída com sucesso!" << endl;
+    }
+   
     return 0;
 }
