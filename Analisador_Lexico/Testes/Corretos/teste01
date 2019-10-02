@@ -1,0 +1,38 @@
+PROGRAMAINICIO
+	DEFINAINSTRUCAO trilha COMO	
+	INICIO	
+		Mova 3 passos	
+		Aguarde Ate Robo Pronto
+		Vire para ESQUERDA
+		Vire para DIREITA
+		Apagar LAMPADA
+		Mova 1 passo
+		Aguarde Ate Robo Pronto
+	FIM
+	EXECUCAOINICIO
+		Repita 3 VEZES Trilha	
+		Vire Para Direita
+	FIMEXECUCAO
+FIMPROGRAMA
+robo pronto
+ROBO PRONTO roBo oCuPADO OCUPADO ocupado	sd3443 
+fim
+FIM	VEZES TRHILHA ROBO
+Aa A ATe ate
+5656464564577346654745732365 gfdg456546 56456 dfg
+varias VARIAS VE VEZES ave 
+PROGRAMAINICIO
+	DEFINAIN STRUCAO trilhaCOMO	
+	INICIO	
+		mova 3 passos	
+		aguarde Ate Robo Pronto
+		Vire para ESQUERDA
+		Vire para DIREITA
+		Apagar LAMPADA
+		Mova 6 passo
+		Aguarde Ate Robo ProntoFIM
+	 EXECUCAOINICIO
+		Repita 3 VEZES Trilha	
+vire Para Direita
+	FIMEXECUCAO
+FIMPROGRAMA

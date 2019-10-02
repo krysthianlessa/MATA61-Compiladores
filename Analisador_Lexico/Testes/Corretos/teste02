@@ -1,0 +1,58 @@
+PROGRAMAINICIO
+	DEFINAINSTRUCAO trilha COMO	
+	INICIODEFINAINSTRUCAO trilha COMO	
+	INICIO	
+		Mova 3 passos	
+		Aguarde Ate Robo Pronto
+		Vire para ESQUERDA
+		Vire para DIREITA
+		Apa	
+		Mova 3 passos	
+		Aguarde Ate Robo Pronto
+		Vire para ESQUERDA
+		Vire para DIREITA
+		Apagar LAMPADA
+		Mova 1 passo
+		Aguarde Ate Robo Pronto
+	FIM
+	EXECUCAOINICIO
+		Repita 3 VEZES Trilha	
+		Vire Pararde Ate Robo Pronto
+	FIM
+	EXECUCAOINICIO
+		Repita 3 VEZES Trilha	
+		Vire Para Direita
+	FIMEXECUCAO
+Aguarde Ate Robo Pronto
+		Vire par	Mova 3 passos	
+		Aguarde Ate Robo Pronto
+		Vire para ESQUERDA
+		Vire para DIREITA
+		Apagar LAMPADA
+		
+	EXECUCAAguarde Ate Robo Pronto
+		Vire par
+PROGRAMAINICIO
+	DEFICIO
+	DEFINAINSTRUCAO trilha COMO	
+	INICIO	
+		Mova 3 passos	
+		Aguarde Ate Robo Pronto
+		Vire para ESQUERDA
+		Vire paICIO	
+		Mova 3 passos	
+		Aguarde Ate Robo Pronto
+		Vire para ESQUERDA
+		Vire paICIO	
+		Mova 3 passos	
+		Aguarde Ate Robo Pronto
+		Vire para ESQUERDA
+		Vire para DIREITA
+		Apagar LAMPADA
+		Mova 1 passo
+		Aguarde Ate Robo Pronto
+	FIM
+	EXECUCAOINICIO
+		Repita 3 VEZES Trilha	
+		Vire Para Direita
+	FIMEXECUCAO
