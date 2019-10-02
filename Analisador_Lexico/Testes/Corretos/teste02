@@ -1,28 +1,25 @@
-PROGRAMAINICIO
-	DEFINAINSTRUCAO trilha COMO	
-	INICIODEFINAINSTRUCAO trilha COMO	
-	INICIO	
-		Mova 3 passos	
-		Aguarde Ate Robo Pronto
-		Vire para ESQUERDA
-		Vire para DIREITA
+adfsdfasdfas
+	DfsdfsdfsfUCAO trilha123123 COMO	
+	INICbdfdasdffsdfCAO trilha COMO	
+	IsdfsO	
+		Msdfova 3 passos	
+		Agusdfrde Ate Rsdfobo Prsdf
+		Vsdfe psdfra ESQsfdFD
+		Vire para DSFREITA
 		Apa	
 		Mova 3 passos	
 		Aguarde Ate Robo Pronto
 		Vire para ESQUERDA
-		Vire para DIREITA
-		Apagar LAMPADA
-		Mova 1 passo
 		Aguarde Ate Robo Pronto
 	FIM
-	EXECUCAOINICIO
-		Repita 3 VEZES Trilha	
+	EXAAAAAAAIO
+		Repita 3 VEZES Trilha123
 		Vire Pararde Ate Robo Pronto
 	FIM
-	EXECUCAOINICIO
-		Repita 3 VEZES Trilha	
+	EXEUJSDSDUICIO
+		Repita 3243324 VEZES Trilha	
 		Vire Para Direita
-	FIMEXECUCAO
+	FIdJJSDkAO
 Aguarde Ate Robo Pronto
 		Vire par	Mova 3 passos	
 		Aguarde Ate Robo Pronto
@@ -30,29 +27,5 @@ Aguarde Ate Robo Pronto
 		Vire para DIREITA
 		Apagar LAMPADA
 		
-	EXECUCAAguarde Ate Robo Pronto
+EXECUCAAguarde Ate Robo Pronto
 		Vire par
-PROGRAMAINICIO
-	DEFICIO
-	DEFINAINSTRUCAO trilha COMO	
-	INICIO	
-		Mova 3 passos	
-		Aguarde Ate Robo Pronto
-		Vire para ESQUERDA
-		Vire paICIO	
-		Mova 3 passos	
-		Aguarde Ate Robo Pronto
-		Vire para ESQUERDA
-		Vire paICIO	
-		Mova 3 passos	
-		Aguarde Ate Robo Pronto
-		Vire para ESQUERDA
-		Vire para DIREITA
-		Apagar LAMPADA
-		Mova 1 passo
-		Aguarde Ate Robo Pronto
-	FIM
-	EXECUCAOINICIO
-		Repita 3 VEZES Trilha	
-		Vire Para Direita
-	FIMEXECUCAO

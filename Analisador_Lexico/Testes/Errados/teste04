@@ -1,51 +1,17 @@
-PROGRAMAINICIO
-	DEFINAINSTRUCAO trilha COMO	
-	INICIO	
-		Mova 3 passos	
-		Aguarde Ate Robo Pronto
+	bo Pronto
 		Vire para ESQUERDA
 		Vire para DIREITA
 		Apagar LAMPADA
-		Mova 1 passo
+		Mova 1%$ passo
 		Aguarde Ate Robo Pronto
 	FIM
 	EXECUCAOINICIO
-		Repita 3 VEZES Trilha	
-		Vire Para Direita
+		Repita 3ABC VEZES Trilha	
+		Vire Para letra123
 	FIMEXECUCAO
 FIMPROGRAMA
 
-PROGRAMAINICIO
-	DEFINAINSTRUCAO TRILHA COMO	
-	INICIO	
-		Mova 3az passos	
-		Aguarde Ate Robo Pronto
-		Vire para ESQUERDA
-		Vire para DIREITA
-		Apagar LAMPADA
-		Mova 1 passo
-		Aguarde Ate Robo Pronto
-	FIM
-	EXECUCAOINICIO
-		Repita 3 VEZES Trilha	
-		Vire Para Direita
-	FIMEXECUCAO
-FIMPROGRAMA
-
-bo Pronto
-		Vire para ESQUERDA
-		Vire para DIREITA
-		Apagar LAMPADA
-		Mova 1 passo
-		Aguarde Ate Robo Pronto
-	FIM
-	EXECUCAOINICIO
-		Repita 3 VEZES Trilha	
-		Vire Para Direita
-	FIMEXECUCAO
-FIMPROGRAMA
-
-_PRICIO
+_PRICIÓ
 	DEFINAINSTRUCAO TRILHA COMO	
 	INICIO	
 		Mova 3 passos	
