@@ -1,5 +1,5 @@
 PROGRAMAINICIO
-	DEFINAINSTRUCAO trilha COMO	
+	DEFINAiNSTRUCAO trilha COMO	
 	INICIO	
 		Mova 3 passos	
 		Aguarde Ate Robo Pronto
