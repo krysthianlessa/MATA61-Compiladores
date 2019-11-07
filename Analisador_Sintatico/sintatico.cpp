@@ -338,7 +338,276 @@ void analisadorLexico(string buffer) {
     }
 }    
 
+Lexema juntarPalavras(vector<Lexema> vetor){
+    Lexema palavrasJuntas;
+    palavrasJuntas.str = "";
+
+    for (int i = 0; i < vetor.size(); i++){
+        palavrasJuntas.str += vetor[i].str;
+        palavrasJuntas.str += '_';
+    }
+    palavrasJuntas.str.pop_back();
+    return palavrasJuntas;
+}
+
+
+void teste2(){
+    list<Lexema> listaDeLexemasNova;
+    vector<Lexema> lexemasParaJuntar;
+    Lexema lexema;
+
+    while (!listaDeLexemas.empty()) {
+        lexema = listaDeLexemas.front();
+        listaDeLexemas.pop_front();
+
+        if(lexema.str == "robo" && !listaDeLexemas.empty()) {
+            lexemasParaJuntar.push_back(lexema);
+            lexema = listaDeLexemas.front();
+            listaDeLexemas.pop_front();
+
+            if(lexema.str == "pronto" || lexema.str == "ocupado" || 
+                lexema.str == "parado" || lexema.str == "movimentando") {
+                lexemasParaJuntar.push_back(lexema);
+                listaDeLexemasNova.push_back(juntarPalavras(lexemasParaJuntar));
+                lexemasParaJuntar.clear();
+            } else {
+                listaDeLexemasNova.push_back(lexemasParaJuntar[0]);
+                listaDeLexemas.push_front(lexema);
+                lexemasParaJuntar.pop_back();
+            }
+        } else if (lexema.str == "vire" && !listaDeLexemas.empty()) {
+            lexemasParaJuntar.push_back(lexema);
+            lexema = listaDeLexemas.front();
+            listaDeLexemas.pop_front();
+
+            if(lexema.str == "para"){
+                lexemasParaJuntar.push_back(lexema);
+                listaDeLexemasNova.push_back(juntarPalavras(lexemasParaJuntar));
+                lexemasParaJuntar.clear();
+            } else {
+                listaDeLexemasNova.push_back(lexemasParaJuntar[0]);
+                listaDeLexemas.push_front(lexema);
+                lexemasParaJuntar.pop_back();
+            }
+
+        } else if ((lexema.str == "apague" || lexema.str == "acenda") && !listaDeLexemas.empty()) {
+            lexemasParaJuntar.push_back(lexema);
+            lexema = listaDeLexemas.front();
+            listaDeLexemas.pop_front();
+
+            if(lexema.str == "lampada"){
+                lexemasParaJuntar.push_back(lexema);
+                listaDeLexemasNova.push_back(juntarPalavras(lexemasParaJuntar));
+                lexemasParaJuntar.clear();
+            } else {
+                listaDeLexemasNova.push_back(lexemasParaJuntar[0]);
+                listaDeLexemas.push_front(lexema);
+                lexemasParaJuntar.pop_back();
+            }
+        } else if(lexema.str == "aguarde" && !listaDeLexemas.empty()) {
+            lexemasParaJuntar.push_back(lexema);
+            lexema = listaDeLexemas.front();
+            listaDeLexemas.pop_front();
+
+            if(lexema.str == "ate"){
+                lexemasParaJuntar.push_back(lexema);
+                listaDeLexemasNova.push_back(juntarPalavras(lexemasParaJuntar));
+                lexemasParaJuntar.clear();
+            } else {
+                listaDeLexemasNova.push_back(lexemasParaJuntar[0]);
+                listaDeLexemas.push_front(lexema);
+                lexemasParaJuntar.pop_back();
+            }
+        } else if((lexema.str == "frente" || lexema.str == "direita" || lexema.str == "esquerda") && !listaDeLexemas.empty()) {
+            lexemasParaJuntar.push_back(lexema);
+            lexema = listaDeLexemas.front();
+            listaDeLexemas.pop_front();
+
+            if (lexema.str == "robo" && !listaDeLexemas.empty()) {
+                lexemasParaJuntar.push_back(lexema);
+                lexema = listaDeLexemas.front();
+                listaDeLexemas.pop_front();
+
+                if (lexema.str == "bloqueada") {
+                    lexemasParaJuntar.push_back(lexema);
+                    listaDeLexemasNova.push_back(juntarPalavras(lexemasParaJuntar));
+                    lexemasParaJuntar.clear();
+                } else {
+                    listaDeLexemasNova.push_back(lexemasParaJuntar[0]);
+                    listaDeLexemas.push_front(lexema);
+                    listaDeLexemas.push_front(lexemasParaJuntar[1]);
+                    lexemasParaJuntar.clear();
+                }
+            } else {
+                listaDeLexemasNova.push_back(lexemasParaJuntar[0]);
+                listaDeLexemas.push_front(lexema);
+                lexemasParaJuntar.pop_back();
+            }
+        } else if(lexema.str == "lampada" && !listaDeLexemas.empty()) {
+            lexemasParaJuntar.push_back(lexema);
+            lexema = listaDeLexemas.front();
+            listaDeLexemas.pop_front();
+
+            if ((lexema.str == "acesa" || lexema.str == "apagada") && !listaDeLexemas.empty()) {
+                lexemasParaJuntar.push_back(lexema);
+                lexema = listaDeLexemas.front();
+                listaDeLexemas.pop_front();
+
+                if (lexema.str == "a"  && !listaDeLexemas.empty()) {
+                    lexemasParaJuntar.push_back(lexema);
+                    lexema = listaDeLexemas.front();
+                    listaDeLexemas.pop_front();
+
+                    if (lexema.str == "frente" || lexema.str == "direita" || lexema.str == "esquerda") {
+                        lexemasParaJuntar.push_back(lexema);
+                        listaDeLexemasNova.push_back(juntarPalavras(lexemasParaJuntar));
+                        lexemasParaJuntar.clear();
+                    } else {
+                        listaDeLexemasNova.push_back(lexemasParaJuntar[0]);
+                        listaDeLexemas.push_front(lexema);
+                        listaDeLexemas.push_front(lexemasParaJuntar[2]);
+                        listaDeLexemas.push_front(lexemasParaJuntar[1]);
+                        lexemasParaJuntar.clear();
+                    }
+                } else {
+                    listaDeLexemasNova.push_back(lexemasParaJuntar[0]);
+                    listaDeLexemas.push_front(lexema);
+                    listaDeLexemas.push_front(lexemasParaJuntar[1]);
+                    lexemasParaJuntar.clear();
+                }
+            } else {
+                listaDeLexemasNova.push_back(lexemasParaJuntar[0]);
+                listaDeLexemas.push_front(lexema);
+                lexemasParaJuntar.pop_back();
+            }
+        } else {
+            listaDeLexemasNova.push_back(lexema);
+        }
+    }
+
+    while (!listaDeLexemasNova.empty()) {
+        lexema = listaDeLexemasNova.front();
+        cout << lexema.str << endl;
+        listaDeLexemasNova.pop_front();
+    }
+    cout << endl;
+}
+
+
+void teste(){
+    list<Lexema> listaDeLexemasNova;
+    Lexema lexema, aux;
+
+    while (!listaDeLexemas.empty()) {
+        lexema = listaDeLexemas.front();
+        listaDeLexemas.pop_front();
+        
+        if(lexema.str == "robo") {
+            aux = listaDeLexemas.front();
+
+            if(aux.str == "pronto" || aux.str == "ocupado" || 
+                aux.str == "parado" || aux.str == "movimentando") {
+                lexema.str += "_";
+                lexema.str += aux.str;
+                listaDeLexemasNova.push_back(lexema);
+                listaDeLexemas.pop_front();
+            } else {
+                listaDeLexemasNova.push_back(lexema);
+            }
+        } else if(lexema.str == "vire") {
+            aux = listaDeLexemas.front();
+
+            if(aux.str == "para"){
+                lexema.str += "_";
+                lexema.str += aux.str;
+                listaDeLexemasNova.push_back(lexema);
+                listaDeLexemas.pop_front();
+            } else {
+                listaDeLexemasNova.push_back(lexema);
+            }
+        } else if(lexema.str == "apague" || lexema.str == "acenda") {
+            aux = listaDeLexemas.front();
+
+            if(aux.str == "lampada"){
+                lexema.str += "_";
+                lexema.str += aux.str;
+                listaDeLexemasNova.push_back(lexema);
+                listaDeLexemas.pop_front();
+            } else {
+                listaDeLexemasNova.push_back(lexema);
+            }
+        } else if(lexema.str == "aguarde") {
+            aux = listaDeLexemas.front();
+
+            if(aux.str == "ate"){
+                lexema.str += "_";
+                lexema.str += aux.str;
+                listaDeLexemasNova.push_back(lexema);
+                listaDeLexemas.pop_front();
+            } else {
+                listaDeLexemasNova.push_back(lexema);
+            }
+        } else if(lexema.str == "frente" || lexema.str == "direita" || lexema.str == "esquerda") {
+            aux = listaDeLexemas.front();
+
+            if(aux.str == "robo"){
+                lexema.str += "_";
+                lexema.str += aux.str;
+                listaDeLexemas.pop_front();
+                Lexema aux2;
+                aux2 = listaDeLexemas.front();
+                if (aux2.str == "bloqueada") {
+                    lexema.str += "_";
+                    lexema.str += aux2.str;
+                    listaDeLexemasNova.push_back(lexema);
+                    listaDeLexemas.pop_front();
+                } else {
+                    listaDeLexemas.push_front(aux);
+                    int tamLexema = lexema.str.size();
+                    int tamAux = aux.str.size();
+                    lexema.str.erase(tamLexema - (tamAux + 1), (tamAux + 1));
+                    listaDeLexemasNova.push_back(lexema);
+                }
+            } else if(lexema.str == "lampada") {
+                aux = listaDeLexemas.front();
+
+                if (aux.str == "acesa" || aux.str == "apagada") {
+                    lexema.str += "_";
+                    lexema.str += aux.str;
+                    listaDeLexemas.pop_front();
+                    Lexema aux2;
+                    aux2 = listaDeLexemas.front();
+                    if (aux2.str == "a") {
+                        lexema.str += "_";
+                        lexema.str += aux2.str;
+                        listaDeLexemas.pop_front();
+                    }
+                }
+            } else {
+                listaDeLexemasNova.push_back(lexema);
+            }
+        } else {
+            listaDeLexemasNova.push_back(lexema);
+        }
+    }
+
+    while (!listaDeLexemasNova.empty()) {
+        lexema = listaDeLexemasNova.front();
+        cout << lexema.str << endl;
+        listaDeLexemasNova.pop_front();
+    }
+    cout << endl;
+}
+
 /*Funções do sintático*/
+
+string getEstadoNonTerminal(int estado, string str) {
+    for (int coluna = 32; coluna < COLUNAS; coluna++ )
+        if (str == tableLR[0][coluna])
+            return tableLR[estado][coluna];
+    return "false";
+}
+
 
 bool ehPalavraReservada(string lexema){
     for (int i = 0; i < palavrasReservadas.size(); i++)
@@ -420,18 +689,25 @@ int main() {
     palavrasReservadas = geraPalavrasReservadas();
     // preencheGramatica();
 
-    while((c = getchar()) && (c != EOF))
+    while((c = getchar()) && (c != EOF)){
+        if((c >= 65) && (c <= 90))
+            c += ' ';
         buffer += c;
+    }
     buffer += -1;
 
     analisadorLexico(buffer);
 
     if (qtdErros == 0)
         cout << "Analise léxica concluída sem erros!" << endl;
-    else
+    else {
         cout << qtdErros << " erros léxicos encotrados." << endl;
+        cout << endl << "Resolva os erros léxicos para fazer a análise semântica." << endl;
+        return 0;
+    }
     
-    analisadorSintatico();
+    teste2();
+    // analisadorSintatico(listaDeLexemas);
    
     return 0;
 }
