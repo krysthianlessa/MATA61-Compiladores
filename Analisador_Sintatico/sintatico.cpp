@@ -351,7 +351,7 @@ Lexema juntarPalavras(vector<Lexema> vetor){
 }
 
 
-void teste2(){
+list<Lexema> juntarPalavras(){
     list<Lexema> listaDeLexemasNova;
     vector<Lexema> lexemasParaJuntar;
     Lexema lexema;
@@ -485,118 +485,14 @@ void teste2(){
         }
     }
 
-    while (!listaDeLexemasNova.empty()) {
-        lexema = listaDeLexemasNova.front();
-        cout << lexema.str << endl;
-        listaDeLexemasNova.pop_front();
-    }
-    cout << endl;
-}
-
-
-void teste(){
-    list<Lexema> listaDeLexemasNova;
-    Lexema lexema, aux;
-
-    while (!listaDeLexemas.empty()) {
-        lexema = listaDeLexemas.front();
-        listaDeLexemas.pop_front();
-        
-        if(lexema.str == "robo") {
-            aux = listaDeLexemas.front();
-
-            if(aux.str == "pronto" || aux.str == "ocupado" || 
-                aux.str == "parado" || aux.str == "movimentando") {
-                lexema.str += "_";
-                lexema.str += aux.str;
-                listaDeLexemasNova.push_back(lexema);
-                listaDeLexemas.pop_front();
-            } else {
-                listaDeLexemasNova.push_back(lexema);
-            }
-        } else if(lexema.str == "vire") {
-            aux = listaDeLexemas.front();
-
-            if(aux.str == "para"){
-                lexema.str += "_";
-                lexema.str += aux.str;
-                listaDeLexemasNova.push_back(lexema);
-                listaDeLexemas.pop_front();
-            } else {
-                listaDeLexemasNova.push_back(lexema);
-            }
-        } else if(lexema.str == "apague" || lexema.str == "acenda") {
-            aux = listaDeLexemas.front();
-
-            if(aux.str == "lampada"){
-                lexema.str += "_";
-                lexema.str += aux.str;
-                listaDeLexemasNova.push_back(lexema);
-                listaDeLexemas.pop_front();
-            } else {
-                listaDeLexemasNova.push_back(lexema);
-            }
-        } else if(lexema.str == "aguarde") {
-            aux = listaDeLexemas.front();
-
-            if(aux.str == "ate"){
-                lexema.str += "_";
-                lexema.str += aux.str;
-                listaDeLexemasNova.push_back(lexema);
-                listaDeLexemas.pop_front();
-            } else {
-                listaDeLexemasNova.push_back(lexema);
-            }
-        } else if(lexema.str == "frente" || lexema.str == "direita" || lexema.str == "esquerda") {
-            aux = listaDeLexemas.front();
-
-            if(aux.str == "robo"){
-                lexema.str += "_";
-                lexema.str += aux.str;
-                listaDeLexemas.pop_front();
-                Lexema aux2;
-                aux2 = listaDeLexemas.front();
-                if (aux2.str == "bloqueada") {
-                    lexema.str += "_";
-                    lexema.str += aux2.str;
-                    listaDeLexemasNova.push_back(lexema);
-                    listaDeLexemas.pop_front();
-                } else {
-                    listaDeLexemas.push_front(aux);
-                    int tamLexema = lexema.str.size();
-                    int tamAux = aux.str.size();
-                    lexema.str.erase(tamLexema - (tamAux + 1), (tamAux + 1));
-                    listaDeLexemasNova.push_back(lexema);
-                }
-            } else if(lexema.str == "lampada") {
-                aux = listaDeLexemas.front();
-
-                if (aux.str == "acesa" || aux.str == "apagada") {
-                    lexema.str += "_";
-                    lexema.str += aux.str;
-                    listaDeLexemas.pop_front();
-                    Lexema aux2;
-                    aux2 = listaDeLexemas.front();
-                    if (aux2.str == "a") {
-                        lexema.str += "_";
-                        lexema.str += aux2.str;
-                        listaDeLexemas.pop_front();
-                    }
-                }
-            } else {
-                listaDeLexemasNova.push_back(lexema);
-            }
-        } else {
-            listaDeLexemasNova.push_back(lexema);
-        }
-    }
-
-    while (!listaDeLexemasNova.empty()) {
-        lexema = listaDeLexemasNova.front();
-        cout << lexema.str << endl;
-        listaDeLexemasNova.pop_front();
-    }
-    cout << endl;
+    // while (!listaDeLexemasNova.empty()) {
+    //     lexema = listaDeLexemasNova.front();
+    //     cout << lexema.str << endl;
+    //     listaDeLexemasNova.pop_front();
+    // }
+    // cout << endl;
+    
+    return listaDeLexemasNova;
 }
 
 /*Funções do sintático*/
@@ -637,7 +533,7 @@ bool analisadorSintatico(list<Lexema> entrada) {
     entrada.push_back(lexema);
     pilha.push("$");
     pilha.push("0");
-
+    
     while(!pilha.empty() && !entrada.empty()) {
         lexema = entrada.front();
         acao = getAcao(lexema.str, estado + 1);
@@ -706,8 +602,10 @@ int main() {
         return 0;
     }
     
-    teste2();
-    // analisadorSintatico(listaDeLexemas);
+    if (analisadorSintatico(juntarPalavras()))
+        cout << "YES" << endl;
+    else
+        cout << "NO" << endl;
    
     return 0;
 }
