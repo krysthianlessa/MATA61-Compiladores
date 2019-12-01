@@ -656,9 +656,7 @@ bool analisadorSemantico(vector<Lexema> lexemas) {
                     << ": A instrução 'Mova n Passos' deve ser precedida por 'Aguarde Ate Robo Pronto'." << endl;
                 flag = false;
             }
-            
         }
-        
     }
     
     return flag;

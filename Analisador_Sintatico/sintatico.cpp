@@ -12,6 +12,7 @@ using namespace std;
 
 typedef struct {
     string str;
+    string original;
     int linha;
     int coluna;
 } Lexema;
@@ -488,26 +489,11 @@ list<Lexema> juntarPalavras(){
             listaDeLexemasNova.push_back(lexema);
         }
     }
-
-    // while (!listaDeLexemasNova.empty()) {
-    //     lexema = listaDeLexemasNova.front();
-    //     cout << lexema.str << endl;
-    //     listaDeLexemasNova.pop_front();
-    // }
-    // cout << endl;
     
     return listaDeLexemasNova;
 }
 
 /*Funções do sintático*/
-
-string getEstadoNonTerminal(int estado, string str) {
-    for (int coluna = 46; coluna < COLUNAS; coluna++ )
-        if (str == tableLR[0][coluna])
-            return tableLR[estado + 1][coluna];
-    return "false";
-}
-
 
 bool ehPalavraReservada(string lexema){
     for (int i = 0; i < palavrasReservadas.size(); i++)
@@ -515,6 +501,35 @@ bool ehPalavraReservada(string lexema){
             return true;
     
     return false;
+}
+
+list<Lexema> pegarIdeNum(list<Lexema> lexemas) {
+    list<Lexema> :: iterator it; 
+    Lexema lex;
+        
+    for(it = lexemas.begin(); it != lexemas.end(); ++it) {
+        lex = *it;
+        if (!ehPalavraReservada(lex.str)) { //É id ou Num
+            if (eh_numero(lex.str[0])) {
+                lex.original = lex.str;
+                lex.str = "num";
+                *it = lex;
+            } else {
+                lex.original = lex.str;
+                lex.str = "id";
+                *it = lex;
+            }
+        }
+    }
+
+    return lexemas; 
+}
+
+string getEstadoNonTerminal(int estado, string str) {
+    for (int coluna = 46; coluna < COLUNAS; coluna++ )
+        if (str == tableLR[0][coluna])
+            return tableLR[estado + 1][coluna];
+    return "false";
 }
 
 string getAcao(string str, int estado) {    
@@ -557,10 +572,6 @@ bool analisadorSintatico(list<Lexema> entrada) {
     pilha.push("0");
     
     while(!pilha.empty() && !entrada.empty()) {
-        // cout << "Pilha: ";
-        // showStack(pilha);
-        // cout << "Entrada: ";
-        // showList(entrada);
         lexema = entrada.front();
         acao = getAcao(lexema.str, estado + 1);
 
@@ -589,7 +600,7 @@ bool analisadorSintatico(list<Lexema> entrada) {
             if (str == "acc")
                 return true;
             if (str == "false" || str == "#") {
-                cout << "Erro sintático em " << lexema.linha << "." << lexema.coluna << endl;
+                cout << "Erro sintático " << lexema.linha << "." << lexema.coluna << endl;
                 return false;
             }
             estado = stoi(str);
@@ -623,7 +634,9 @@ int main() {
         return 0;
     }
     
-    if (analisadorSintatico(juntarPalavras()))
+    list<Lexema> lexemas = pegarIdeNum(juntarPalavras());
+
+    if (analisadorSintatico(lexemas))
         cout << "Analise sintática concluída sem erros!" << endl;
     else
         cout << endl << "Resolva o erro sintático para fazer a análise semântica." << endl;
