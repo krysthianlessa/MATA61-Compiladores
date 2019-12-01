@@ -12,6 +12,7 @@ using namespace std;
 
 typedef struct {
     string str;
+    string original;
     int linha;
     int coluna;
 } Lexema;
@@ -26,6 +27,7 @@ typedef struct {
 MaquinaDeEstados maquina;
 vector<string> palavrasReservadas;
 list<Lexema> listaDeLexemas;
+vector<string> instrucoesDeclaradas;
 vector<string> gramatica;
 vector<int> qtdRegras;
 int linha = 1;
@@ -175,6 +177,8 @@ vector<string> geraPalavrasReservadas() {
     vetor.push_back("lampada_apagada_a_esquerda");
     vetor.push_back("lampada_acesa_a_direita");
     vetor.push_back("lampada_apagada_a_direita");
+    vetor.push_back("esquerda");
+    vetor.push_back("direita");
 
     return vetor;
 }
@@ -342,7 +346,7 @@ void analisadorLexico(string buffer) {
     }
 }    
 
-Lexema juntarPalavras(vector<Lexema> vetor){
+Lexema join(vector<Lexema> vetor){
     Lexema palavrasJuntas;
     palavrasJuntas.str = "";
 
@@ -351,11 +355,13 @@ Lexema juntarPalavras(vector<Lexema> vetor){
         palavrasJuntas.str += '_';
     }
     palavrasJuntas.str.pop_back();
+    palavrasJuntas.linha = vetor[vetor.size() - 1].linha;
+    palavrasJuntas.coluna = vetor[vetor.size() - 1].coluna;
     return palavrasJuntas;
 }
 
 
-list<Lexema> juntarPalavras(){
+list<Lexema> juntarPalavras() {
     list<Lexema> listaDeLexemasNova;
     vector<Lexema> lexemasParaJuntar;
     Lexema lexema;
@@ -372,7 +378,7 @@ list<Lexema> juntarPalavras(){
             if(lexema.str == "pronto" || lexema.str == "ocupado" || 
                 lexema.str == "parado" || lexema.str == "movimentando") {
                 lexemasParaJuntar.push_back(lexema);
-                listaDeLexemasNova.push_back(juntarPalavras(lexemasParaJuntar));
+                listaDeLexemasNova.push_back(join(lexemasParaJuntar));
                 lexemasParaJuntar.clear();
             } else {
                 listaDeLexemasNova.push_back(lexemasParaJuntar[0]);
@@ -386,7 +392,7 @@ list<Lexema> juntarPalavras(){
 
             if(lexema.str == "para"){
                 lexemasParaJuntar.push_back(lexema);
-                listaDeLexemasNova.push_back(juntarPalavras(lexemasParaJuntar));
+                listaDeLexemasNova.push_back(join(lexemasParaJuntar));
                 lexemasParaJuntar.clear();
             } else {
                 listaDeLexemasNova.push_back(lexemasParaJuntar[0]);
@@ -401,7 +407,7 @@ list<Lexema> juntarPalavras(){
 
             if(lexema.str == "lampada"){
                 lexemasParaJuntar.push_back(lexema);
-                listaDeLexemasNova.push_back(juntarPalavras(lexemasParaJuntar));
+                listaDeLexemasNova.push_back(join(lexemasParaJuntar));
                 lexemasParaJuntar.clear();
             } else {
                 listaDeLexemasNova.push_back(lexemasParaJuntar[0]);
@@ -415,7 +421,7 @@ list<Lexema> juntarPalavras(){
 
             if(lexema.str == "ate"){
                 lexemasParaJuntar.push_back(lexema);
-                listaDeLexemasNova.push_back(juntarPalavras(lexemasParaJuntar));
+                listaDeLexemasNova.push_back(join(lexemasParaJuntar));
                 lexemasParaJuntar.clear();
             } else {
                 listaDeLexemasNova.push_back(lexemasParaJuntar[0]);
@@ -434,7 +440,7 @@ list<Lexema> juntarPalavras(){
 
                 if (lexema.str == "bloqueada") {
                     lexemasParaJuntar.push_back(lexema);
-                    listaDeLexemasNova.push_back(juntarPalavras(lexemasParaJuntar));
+                    listaDeLexemasNova.push_back(join(lexemasParaJuntar));
                     lexemasParaJuntar.clear();
                 } else {
                     listaDeLexemasNova.push_back(lexemasParaJuntar[0]);
@@ -464,7 +470,7 @@ list<Lexema> juntarPalavras(){
 
                     if (lexema.str == "frente" || lexema.str == "direita" || lexema.str == "esquerda") {
                         lexemasParaJuntar.push_back(lexema);
-                        listaDeLexemasNova.push_back(juntarPalavras(lexemasParaJuntar));
+                        listaDeLexemasNova.push_back(join(lexemasParaJuntar));
                         lexemasParaJuntar.clear();
                     } else {
                         listaDeLexemasNova.push_back(lexemasParaJuntar[0]);
@@ -488,26 +494,11 @@ list<Lexema> juntarPalavras(){
             listaDeLexemasNova.push_back(lexema);
         }
     }
-
-    // while (!listaDeLexemasNova.empty()) {
-    //     lexema = listaDeLexemasNova.front();
-    //     cout << lexema.str << endl;
-    //     listaDeLexemasNova.pop_front();
-    // }
-    // cout << endl;
     
     return listaDeLexemasNova;
 }
 
 /*Funções do sintático*/
-
-string getEstadoNonTerminal(int estado, string str) {
-    for (int coluna = 46; coluna < COLUNAS; coluna++ )
-        if (str == tableLR[0][coluna])
-            return tableLR[estado + 1][coluna];
-    return "false";
-}
-
 
 bool ehPalavraReservada(string lexema){
     for (int i = 0; i < palavrasReservadas.size(); i++)
@@ -517,6 +508,35 @@ bool ehPalavraReservada(string lexema){
     return false;
 }
 
+list<Lexema> pegarIdeNum(list<Lexema> lexemas) {
+    list<Lexema> :: iterator it; 
+    Lexema lex;
+        
+    for(it = lexemas.begin(); it != lexemas.end(); ++it) {
+        lex = *it;
+        if (!ehPalavraReservada(lex.str)) { //É id ou Num
+            if (eh_numero(lex.str[0])) {
+                lex.original = lex.str;
+                lex.str = "num";
+                *it = lex;
+            } else {
+                lex.original = lex.str;
+                lex.str = "id";
+                *it = lex;
+            }
+        }
+    }
+
+    return lexemas; 
+}
+
+string getEstadoNonTerminal(int estado, string str) {
+    for (int coluna = 46; coluna < COLUNAS; coluna++ )
+        if (str == tableLR[0][coluna])
+            return tableLR[estado + 1][coluna];
+    return "false";
+}
+
 string getAcao(string str, int estado) {    
     for (int col = 1; col <= 45; col++)
         if (str == tableLR[0][col])
@@ -524,26 +544,6 @@ string getAcao(string str, int estado) {
 
     return "false";
 }
-
-void showStack(stack<string> pilha) {
-    string aux;
-    while (!pilha.empty()) {
-        aux = pilha.top();
-        cout << aux << ' ';
-        pilha.pop();
-    }
-    cout << '\n'; 
-}
-
-void showList(list<Lexema> lista) { 
-    list<Lexema> :: iterator it; 
-    Lexema lex;
-    for(it = lista.begin(); it != lista.end(); ++it) {
-        lex = *it;
-        cout << lex.str << ' '; 
-    } 
-    cout << '\n'; 
-} 
 
 bool analisadorSintatico(list<Lexema> entrada) {
     stack<string> pilha;
@@ -557,17 +557,13 @@ bool analisadorSintatico(list<Lexema> entrada) {
     pilha.push("0");
     
     while(!pilha.empty() && !entrada.empty()) {
-        // cout << "Pilha: ";
-        // showStack(pilha);
-        // cout << "Entrada: ";
-        // showList(entrada);
         lexema = entrada.front();
         acao = getAcao(lexema.str, estado + 1);
 
         if (acao == "acc")
             return true;
         if ((acao == "false") || (acao == "#")) {
-            cout << "Erro sintático em " << lexema.linha << "." << lexema.coluna << endl;
+            cout << "Erro sintático " << lexema.linha << "." << lexema.coluna << endl;
             return false;
         }
 
@@ -589,7 +585,7 @@ bool analisadorSintatico(list<Lexema> entrada) {
             if (str == "acc")
                 return true;
             if (str == "false" || str == "#") {
-                cout << "Erro sintático em " << lexema.linha << "." << lexema.coluna << endl;
+                cout << "Erro sintático " << lexema.linha << "." << lexema.coluna << endl;
                 return false;
             }
             estado = stoi(str);
@@ -598,6 +594,74 @@ bool analisadorSintatico(list<Lexema> entrada) {
     }
 
     return true;
+}
+
+/* Funções do Analisador Semântico */
+
+vector<Lexema> passarParaVector(list<Lexema> lexemas) {
+    vector<Lexema> vetor;
+
+    for (int i = 0; !lexemas.empty(); i++) {
+        vetor.push_back(lexemas.front());
+        lexemas.pop_front();
+    }
+
+    return vetor;
+}
+
+bool contemNaListaDeInstrucoes(string instrucao) {
+    for (int i = 0; i < instrucoesDeclaradas.size(); i++) {
+        if (instrucao == instrucoesDeclaradas[i]) 
+            return true;
+    }
+    return false;
+}
+
+bool analisadorSemantico(vector<Lexema> lexemas) {
+    bool flag = true;
+
+    for(int i = 0; i < lexemas.size();i++) {
+        if (i > 0 && lexemas[i - 1].str == "definainstrucao") { //Declaração de instrução
+            if (contemNaListaDeInstrucoes(lexemas[i].original)) {
+                cout 
+                    << "Erro Semântico " << lexemas[i].linha << "." << lexemas[i].coluna 
+                    << ": Instrução já declarada." << endl;
+                flag = false;
+            } else {
+                instrucoesDeclaradas.push_back(lexemas[i].original);
+            }   
+        }
+        if ((lexemas[i].str == "esquerda") && (lexemas[i - 1].str == "vire_para")) {
+            if ((lexemas[i - 3].str == "vire_para") && (lexemas[i - 2].str == "direita")) {
+                cout 
+                    << "Erro Semântico " << lexemas[i].linha << "." << lexemas[i].coluna 
+                    << ": Declarações de Vire Para imediatamente sub. com sentidos diferentes." << endl;
+                flag = false;
+            }
+            
+        }
+        if ((lexemas[i].str == "direita") && (lexemas[i - 1].str == "vire_para")) {
+            if ((lexemas[i - 3].str == "vire_para") && (lexemas[i - 2].str == "esquerda")) {
+                cout 
+                    << "Erro Semântico " << lexemas[i].linha << "." << lexemas[i].coluna 
+                    << ": Declarações de 'Vire Para' imediatamente subsequentes com sentidos diferentes." << endl;
+                flag = false;
+            }
+        }
+        if ((lexemas[i].str == "passos") && (lexemas[i - 1].str == "num") && 
+            (lexemas[i - 2].str == "mova")) {
+            if (lexemas[i + 1].str != "aguarde_ate" && lexemas[i + 2].str != "robo_pronto") {
+                cout 
+                    << "Erro Semântico " << lexemas[i].linha << "." << lexemas[i].coluna 
+                    << ": A instrução 'Mova n Passos' deve ser precedida por 'Aguarde Ate Robo Pronto'." << endl;
+                flag = false;
+            }
+            
+        }
+        
+    }
+    
+    return flag;
 }
 
 int main() {
@@ -623,15 +687,21 @@ int main() {
         return 0;
     }
     
-    if (analisadorSintatico(juntarPalavras()))
-        cout << "Analise sintática concluída sem erros!" << endl;
-    else
-        cout << endl << "Resolva o erro sintático para fazer a análise semântica." << endl;
+    list<Lexema> lexemas = pegarIdeNum(juntarPalavras());
 
-    // if (analisadorSemantico())
-    //     cout << "Analise sintática concluída sem erros!" << endl;
-    // else
-    //     cout << endl << "Resolva o erro semântico para concluir compilação." << endl;
+    if (analisadorSintatico(lexemas))
+        cout << "Analise sintática concluída sem erros!" << endl;
+    else {
+        cout << endl << "Resolva o erro sintático para fazer a análise semântica." << endl;
+        return 0;
+    }
+
+    if (analisadorSemantico(passarParaVector(lexemas)))
+        cout << "Analise semântica concluída sem erros!" << endl;
+    else {
+        cout << endl << "Resolva os erros semânticos para concluir compilação." << endl;
+        return 0;
+    }
     
     
     return 0;
