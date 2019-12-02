@@ -1,0 +1,27 @@
+programainicio
+    definainstrucao compiladores como
+    inicio
+        vire para esquerda
+        acenda lampada
+        vire para direita
+    fim
+    definainstrucao compiladores2019 como
+    inicio
+        vire para esquerda
+        se lampada acesa a direita entao 
+            inicio
+                vire para esquerda
+                apague lampada
+            fim
+        fimse
+        vire para direita
+    fim
+    execucaoinicio
+    inicio
+        repita 3 vezes compiladores fimrepita
+        vire para direita
+        acenda lampada
+        vire para esquerda
+    fim
+    fimexecucao
+fimprograma

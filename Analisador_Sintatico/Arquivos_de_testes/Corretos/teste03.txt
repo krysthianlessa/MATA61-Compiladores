@@ -1,0 +1,19 @@
+programainicio
+    execucaoinicio
+        inicio
+            vire para direita
+            se lampada acesa a frente entao 
+                apague lampada 
+            fimse senao
+                acenda lampada
+            fimsenao
+            enquanto direita robo bloqueada faca
+                inicio
+                    mova 5 passos
+                    aguarde ate robo pronto
+                    vire para direita
+                fim
+            fimpara
+        fim
+    fimexecucao
+fimprograma

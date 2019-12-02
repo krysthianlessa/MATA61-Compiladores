@@ -1,0 +1,25 @@
+programainicio
+    definainstrucao instru10 como
+    inicio
+        enquanto frente robo bloqueada faca
+            inicio
+                vire para direita
+                mova 2 passos
+                aguarde ate robo pronto
+                vire para esquerda
+                mova 3 passos
+            fim
+        fimpara
+    fim
+    execucaoinicio
+    inicio
+        repita 3 vezes instru10 fimrepita
+        vire para direita
+        se lampada acesa a frente entao 
+            apague lampada 
+        fimse senao
+            acenda lampada
+        fimsenao
+    fim
+    fimexecucao
+fimprograma

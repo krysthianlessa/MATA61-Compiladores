@@ -1,0 +1,17 @@
+programainicio
+    definainstrucao compiladores como
+    inicio
+        vire para esquerda
+        acenda lampada
+        vire para direita
+    fim
+    execucaoinicio
+    inicio
+        repita 3 vezes compiladores fimrepita
+        vire para direita
+        mova 5 passos
+        aguarde ate robo pronto
+        apague lampada
+    fim
+    fimexecucao
+fimprograma

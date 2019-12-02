@@ -1,0 +1,23 @@
+programainicio
+    definainstrucao compiladores como
+    inicio
+        vire para esquerda
+        acenda lampada
+        vire para direita
+    fim
+    definainstrucao compiladores como
+    inicio
+        apague lampada
+        vire para esquerda
+        vire para direita
+    fim
+    execucaoinicio
+    inicio
+        repita 3 vezes compiladores fimrepita
+        vire para direita
+        vire para esquerda
+        mova 5 passos
+        apague lampada
+    fim
+    fimexecucao
+fimprograma

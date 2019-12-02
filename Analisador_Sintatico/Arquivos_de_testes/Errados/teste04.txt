@@ -1,0 +1,14 @@
+programainicio
+    definainstrucao instru10 como
+    inicio
+        enquanto frente robo bloqueada faca
+            inicio
+                vire para direita
+                mova 2 passos
+                aguarde ate robo pronto
+                vire para esquerda
+                mova 3 passos
+            fim
+        fimpara
+    fim
+fimprograma

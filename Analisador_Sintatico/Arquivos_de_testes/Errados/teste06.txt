@@ -1,0 +1,18 @@
+programainicio
+    execucaoinicio
+        inicio
+            repita 3 vezes instru10 fimrepita
+            vire para direita
+            se lampada acesa a frente entao 
+                apague lampada 
+            senao
+                acenda lampada
+            enquanto direita robo bloqueada faca
+                inicio
+                    mova 5 passos
+                    aguarde ate robo pronto
+                    vire para direita
+                fim
+        fim
+    fimexecucao
+fimprograma
